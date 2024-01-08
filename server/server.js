@@ -7,6 +7,6 @@ app.get('/', (req,res)=> {
 	
 })
 
-app.listen(8000, ()=>{
-	console.log('8000 portunda çalışıyor.')
+app.listen(80, ()=>{
+	console.log('80 portunda çalışıyor.')
 })
