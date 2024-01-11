@@ -1,4 +1,3 @@
-
 import express from 'express'
 import {index} from '../controllers/pageController.js'
 const router = express.Router();

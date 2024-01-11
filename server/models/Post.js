@@ -1,4 +1,4 @@
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const PostSchema = new Schema({
     title:{
@@ -12,11 +12,10 @@ const PostSchema = new Schema({
         required: true,
 
     },
-
     createdAt: {
         type: Date,
         default: Date.now
     }
 })
 
-export default Model('Post', PostSchema)
+export default model('Post', PostSchema)
