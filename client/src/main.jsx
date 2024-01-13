@@ -1,9 +1,13 @@
 import React, {StrictMode} from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import Routes from './routes/routes.jsx'
+
+import {BrowserRouter} from "react-router-dom"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   </StrictMode>,
 )
