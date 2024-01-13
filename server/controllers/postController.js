@@ -7,6 +7,13 @@ async function createPost(req,res){
     })
 }
 
+async function getPosts(req,res){
+    const posts = await Post.find({})
+    res.json({
+        posts
+    })
+}
+
 export {
-    createPost
+    createPost, getPosts
 }

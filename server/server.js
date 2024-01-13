@@ -1,20 +1,15 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import mongoose from 'mongoose'
 import cors from 'cors'
 import methodOverride from 'method-override'
 
 import pageRoute from './routers/pageRoute.js'
 import postRoute from './routers/postRoute.js'
-
+import dbconn from './config/db.js'
 const app = express()
 dotenv.config()
 
-mongoose.connect(process.env.MONGODB_URL).then(()=> {
-	console.log('Veritabanına bağlandı.')
-}).catch((err)=>{
-	console.log("Veritabanı hatası: ", err)
-})
+dbconn()
 
 //middlewares
 app.use(express.static('public'))
