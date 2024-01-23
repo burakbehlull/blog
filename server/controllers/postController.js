@@ -77,6 +77,46 @@ async function getPosts(req,res){
                     }
         }
 
+        async function updatePost(req, res) {
+            try {
+
+                const { id, title, description } = req.body;
+
+                if (!id || !title || !description) {
+                    return res.status(400).json({
+                        message: "Please choose a post and fill out title and description fields"
+                    });
+                }
+
+                const post = await Post.findOneAndUpdate(
+                    { _id: id },
+                    { 
+                        title: title,
+                        description: description 
+                    },
+                    { new: true }
+                );
+                
+                if (post) {
+                    res.status(200).json({
+                        message: "Post updated successfully.",
+                        updatedPost: post
+                    });
+                } else {
+                    res.status(404).json({
+                        message: "Post not found!"
+                    });
+                }
+
+                    } catch (error) {
+                        console.error(error);
+                        res.status(500).json({
+                            error: true,
+                            message: error.message
+                        });
+                    }
+        }
+
 export {
-    createPost, getPosts, deletePost
+    createPost, getPosts, deletePost, updatePost
 }
