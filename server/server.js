@@ -9,6 +9,7 @@ import pageRoute from './routers/pageRoute.js'
 import postRoute from './routers/postRoute.js'
 import authRoute from './routers/authRoute.js'
 import dbconn from './config/db.js'
+
 const app = express()
 dotenv.config()
 
@@ -27,13 +28,12 @@ app.use(cors({
 	origin: true,
 	credentials: true
 }))
-app.use(session({ secret: 'kediler', 
+app.use(session({ secret: process.env.SESSION_KEY, 
 	resave: true, 
 	saveUninitialized: true 
 }))
 app.use(passport.session())
 app.use(passport.initialize())
-
 
 app.use('/', pageRoute)
 app.use('/api', postRoute)
