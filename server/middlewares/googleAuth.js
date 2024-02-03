@@ -12,6 +12,14 @@ function GoogleAuthMiddleware(){
     },
     async (accessToken, refreshToken, profile, done)=>{},
     ))
+
+    passport.serializeUser((user, done)=> {
+        done(null, user.id)
+    })
+
+    passport.deserializeUser((id, done)=> {
+        done(null, user)
+    })
     
     return auth
 }
