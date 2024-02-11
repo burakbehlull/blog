@@ -1,8 +1,13 @@
-import {sign} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 function generateAccessToken(data){
-    return sign(data, process.env.TOKEN_SECRET, {expiresIn: '7d'})
+    return jwt.sign(data, process.env.JWT_KEY, {expiresIn: '1h'})
 }
 function generateRefreshToken(data){
-    return sign(data, process.env.TOKEN_SECRET, {expiresIn: '15m'})
+    return jwt.sign(data, process.env.JWT_KEY, {expiresIn: '12h'})
+}
+
+export {
+    generateAccessToken,
+    generateRefreshToken
 }
