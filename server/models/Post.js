@@ -19,8 +19,20 @@ const PostSchema = new Schema({
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category',
+    },
+    slug: {
+        type: String,
+        unique: true
     }
     
+})
+
+PostSchema.pre('validate', (next)=>{
+    this.slug = slugify(this.title, {
+        lower: true,
+        strict: true
+    })
+    next()
 })
 
 export default model('Post', PostSchema)
