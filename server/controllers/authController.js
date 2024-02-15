@@ -1,6 +1,7 @@
 import User from '../models/User.js'
 import {generateRefreshToken} from '../helpers/sessions.js'
 async function Signin(req,res){
+    
     const {displayName, username, email, password} = req.body
     const user = await User.findOne({email: email})
     if(user){

@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose"
 import slugify from "slugify"
+
 const CategorySchema = new Schema({
     name: {
         type: String,

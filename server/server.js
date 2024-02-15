@@ -4,6 +4,7 @@ import cors from 'cors'
 import methodOverride from 'method-override'
 import passport from 'passport'
 import session from 'express-session'
+import morgan from 'morgan'
 
 import pageRoute from './routers/pageRoute.js'
 import postRoute from './routers/postRoute.js'
@@ -21,9 +22,11 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(
 	methodOverride('_method', {
-	  methods: ['POST', 'GET'],
+		methods: ['POST', 'GET'],
 	})
 )
+app.use(morgan('dev'))
+
 app.use(cors({
 	origin: true,
 	credentials: true

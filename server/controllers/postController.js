@@ -18,19 +18,18 @@ async function getPosts(req,res){
 
                 let filter = {};
                 
-                      if (category) {
-                        filter.category = category._id;
-                      }
+                if (category) {
+                    filter.category = category._id;
+                }
                 
-                      if (search) {
-                        filter.title = { $regex: '.*' + search + '.*', $options: 'i' };
-                      }
+                if (search) {
+                    filter.title = { $regex: '.*' + search + '.*', $options: 'i' };
+                }
 
-                      if (!categorySlug && !search)
-                      {
-                        filter.title = null;
-                        filter.category = null;
-                      }
+                if (!categorySlug && !search){
+                    filter.title = null;
+                    filter.category = null;
+                }
         
                 const posts = await Post.find(filter)
                 .sort('-createdAt');
