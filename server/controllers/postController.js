@@ -34,7 +34,7 @@ async function getPosts(req,res){
                 const posts = await Post.find(filter)
                 .sort('-createdAt');
         
-        if (posts.  length) {
+        if (posts.length) {
             res.status(200).json(posts);
         } else {
             res.status(404).json({
@@ -115,7 +115,19 @@ async function getPosts(req,res){
                         });
                     }
         }
+        async function allPosts(req, res) {
+            try {
+                const posts = await Post.find({}).sort('-createdAt');
+                res.status(200).json(posts);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({
+                    error: true,
+                    message: error.message
+                });
+            }
+        }
 
 export {
-    createPost, getPosts, deletePost, updatePost
+    createPost, getPosts, deletePost, updatePost,allPosts
 }

@@ -4,7 +4,7 @@ function generateAccessToken(data){
     jwt.verify(data, process.env.JWT_KEY, (err, user)=>{
         if(err){
 
-            console.log(err)
+            return false
         }
             
         return jwt.sign(data, process.env.JWT_KEY, {expiresIn: '1h'})
