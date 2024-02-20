@@ -1,4 +1,5 @@
 import Post from '../models/Post.js'
+import User from '../models/User.js'
 import Category from '../models/Category.js'
 
 async function createPost(req,res){
@@ -127,7 +128,24 @@ async function getPosts(req,res){
                 });
             }
         }
+        async function findUser(req,res){
+            const {username} = req.body
+            try {
+                const user = await User.findOne({username: username})
+                if(user){
+                    const posts = await Post.find({user: user._id})
+                    res.json({user: user, posts: posts})
+                } else {
+                    res.json({message: "User not found"})
+                }
+                
+            } catch (err) {
+                res.status(500).json({error: err.message})
+            }
+            
+        }
+        
 
 export {
-    createPost, getPosts, deletePost, updatePost,allPosts
+    createPost, getPosts, deletePost, updatePost,allPosts, findUser
 }

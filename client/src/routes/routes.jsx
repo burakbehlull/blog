@@ -9,7 +9,7 @@ function Routes() {
             path: '/',
             element: <App />,
         }, {
-            path: '/profile/:userId',
+            path: '/profile/:username',
             element: <Profile />,
         }
     ])

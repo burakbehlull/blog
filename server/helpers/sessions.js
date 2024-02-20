@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken'
 function generateAccessToken(data){
     jwt.verify(data, process.env.JWT_KEY, (err, user)=>{
         if(err){
-
+            
+            
             return false
         }
             

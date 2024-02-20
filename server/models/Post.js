@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import slugify from 'slugify'
 
 const PostSchema = new Schema({
     title:{
@@ -20,6 +21,10 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Category',
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
     slug: {
         type: String,
         unique: true
@@ -27,7 +32,7 @@ const PostSchema = new Schema({
     
 })
 
-PostSchema.pre('validate', (next)=>{
+PostSchema.pre('validate', function(next) {
     this.slug = slugify(this.title, {
         lower: true,
         strict: true
