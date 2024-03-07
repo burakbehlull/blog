@@ -24,13 +24,13 @@ function Profile() {
     return (
         <>
             <h1>Profile</h1>
-            <h3> User Id: {username} </h3>
+            <h3> User Id: {username || ""} </h3>
 
-            {user && <h3> User: {user.displayName} </h3>}
-            {error && <h3> {error} </h3>}
+            {user && <h3> User: {user.displayName || "" } </h3>}
+            {error && <h3> {error || "" } </h3>}
             <h3> Posts: </h3>
             <ul>
-                {posts.map(post => <li key={post._id}>{post.title}</li>)}
+                {posts?.map(post => <li key={post._id}>{post.title}</li>)}
             </ul>
         </>
     )

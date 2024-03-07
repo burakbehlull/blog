@@ -3,12 +3,14 @@ import jwt from 'jsonwebtoken'
 function generateAccessToken(data){
     jwt.verify(data, process.env.JWT_KEY, (err, user)=>{
         if(err){
-            
-            
-            return false
+            return {
+                success: false,
+                message: "Kimlik doğrulanmadı"
+            }
         }
-            
-        return jwt.sign(data, process.env.JWT_KEY, {expiresIn: '1h'})
+        console.log(user)
+        const generated = jwt.sign(user, process.env.JWT_KEY, {expiresIn: '1h'})
+        return generated
     })
 }
 function generateRefreshToken(data){
