@@ -27,7 +27,7 @@ async function login(req,res){
         const {email, password} = req.body
         const user = await User.findOne({email: email})
         console.log("USER TOKEN: ", user.token)
-        const accessToken = verifyAccessToken(user.token)
+        const accessToken = verifyAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhcnRodmFkZXIiLCJlbWFpbCI6ImRhcnRoQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoicGFkbWUiLCJpYXQiOjE3MDk4NDAzMDQsImV4cCI6MTcwOTg4MzUwNH0.I-BMRDhGhpqTv5vllHlcu4aX5Z3fpbNrpu5iypm5Iyg')
         console.log("access: ", accessToken)
         if(user.password == password){
             res.json({
@@ -43,7 +43,7 @@ async function login(req,res){
     } catch (err) {
         res.json({
             success: false,
-            error: err
+            error: err.message
         })
     }
 }
