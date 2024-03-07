@@ -1,34 +1,38 @@
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
+const JWT_KEY = process.env.JWT_KEY
 
-function generateAccessToken(data){
-    jwt.verify(data, process.env.JWT_KEY, (err, user)=>{
-        if(err){
-            return {
-                success: false,
-                message: "Kimlik doğrulanmadı"
-            }
-        }
-        console.log(user)
-        const generated = jwt.sign(user, process.env.JWT_KEY, {expiresIn: '1h'})
-        return generated
+
+
+function verifyAccessToken(token){JWT_KEY
+    const data = jwt.verify(token, )
+    console.log("verify", data)
+    return jwt.sign(data, JWT_KEY, {
+        expiresIn: '30m'
     })
 }
+
+function generateAccessToken(data){
+    return jwt.sign(data, JWT_KEY, {expiresIn: '30m'})
+}
+
 function generateRefreshToken(data){
-    return jwt.sign(data, process.env.JWT_KEY, {expiresIn: '12h'})
+    return jwt.sign(data, JWT_KEY, {expiresIn: '12h'})
 }
 
 function verifyToken(token){
-    return jwt.verify(token, process.env.JWT_KEY, (err, user)=>{
+    return jwt.verify(token, JWT_KEY, (err, user)=>{
         if(err){
-            return {message: 'Token geçersiz.'}
-        } else {
-            return user
-        }
+            return err
+        } 
+        return user
     })
 }
 
 export {
+    verifyAccessToken,
     generateAccessToken,
     generateRefreshToken,
-    verifyToken
+    verifyToken,
 }
