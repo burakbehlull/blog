@@ -19,8 +19,9 @@ function verifyToken(token){
     return jwt.verify(token, process.env.JWT_KEY, (err, user)=>{
         if(err){
             return {message: 'Token geçersiz.'}
+        } else {
+            return user
         }
-        return user
     })
 }
 

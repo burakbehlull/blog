@@ -1,6 +1,6 @@
 import User from '../models/User.js'
 import {generateRefreshToken} from '../helpers/sessions.js'
-async function Signin(req,res){
+async function register(req,res){
     
     const {displayName, username, email, password} = req.body
     const user = await User.findOne({email: email})
@@ -23,10 +23,16 @@ async function Signin(req,res){
     
 }
 
+function login(){
+
+    return ''
+}
+
 function GoogleRedirect(){
     return ''
 }
 
 export {
-    Signin, GoogleRedirect
+    register, login, 
+    GoogleRedirect
 }
