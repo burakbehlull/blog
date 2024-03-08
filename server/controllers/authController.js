@@ -14,7 +14,7 @@ async function register(req,res){
             username: username,
             email: email,
             password: password,
-            token: generateRefreshToken({ username: username, email: email })
+            token: generateRefreshToken({ email: email })
         })
         res.json({
             message: 'Kullanıcı başarıyla oluşturuldu.'
@@ -23,16 +23,19 @@ async function register(req,res){
 }
 
 async function login(req,res){
+    const {email, password} = req.body
     try {
-        const {email, password} = req.body
         const user = await User.findOne({email: email})
-        console.log("USER TOKEN: ", user.token)
-        const accessToken = verifyAccessToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhcnRodmFkZXIiLCJlbWFpbCI6ImRhcnRoQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoicGFkbWUiLCJpYXQiOjE3MDk4NDAzMDQsImV4cCI6MTcwOTg4MzUwNH0.I-BMRDhGhpqTv5vllHlcu4aX5Z3fpbNrpu5iypm5Iyg')
-        console.log("access: ", accessToken)
+        console.log("model user", user)
+        if(user == null){
+
+        }
         if(user.password == password){
+            const isToken = await verifyAccessToken(user)
+            console.log('Verify acess isToken', isToken)
             res.json({
                 success: true,
-                accessToken: accessToken, 
+                accessToken: isToken, 
             })
         } else {
             res.json({
@@ -41,10 +44,11 @@ async function login(req,res){
             })
         }
     } catch (err) {
-        res.json({
-            success: false,
-            error: err.message
-        })
+        return {
+            message: "Böyle bir kullanıcı yok",
+            error: err
+        }
+       
     }
 }
 
