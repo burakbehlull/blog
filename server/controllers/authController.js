@@ -26,15 +26,17 @@ async function login(req,res){
     const {email, password} = req.body
     try {
         const user = await User.findOne({email: email})
-        console.log("model user", user)
-        if(user == null){
-
+        if(user == undefined || user == null) {
+            res.json({
+                success: false,
+                message: 'Kullanıcı mevcut değil',
+            })
         }
         if(user.password == password){
             const isToken = await verifyAccessToken(user)
-            console.log('Verify acess isToken', isToken)
             res.json({
                 success: true,
+                username: user?.username,
                 accessToken: isToken, 
             })
         } else {
@@ -45,7 +47,8 @@ async function login(req,res){
         }
     } catch (err) {
         return {
-            message: "Böyle bir kullanıcı yok",
+            success: false,
+            message: "Hata",
             error: err
         }
        
