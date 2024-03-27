@@ -10,8 +10,9 @@ function Profile() {
 
     useEffect(()=>{
         axios.post('http://localhost:80/api/findUser', { username: username }).then(res => {
-            setUser(res.data.user)
-            setPosts(res.data.posts)
+            const info = res.data
+			setUser(info.user)
+            setPosts(info.posts)
         }).catch(err => {
             setError(err.message)
         })

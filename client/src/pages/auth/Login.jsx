@@ -4,7 +4,7 @@ import {useCookies} from 'react-cookie'
 
 function Login() {
     const [usernameCookies, setUsernameCookie, removeUsernameCookie] = useCookies(['username'])
-    const [accesstokenCookies, setAccesstokenCookie, removeAccesstokenCookie] = useCookies(['username'])
+    const [accesstokenCookies, setAccesstokenCookie, removeAccesstokenCookie] = useCookies(['token'])
     
     const [form, setForm] = useState({email: '', password: ''})
     const [data, setData] = useState({})
@@ -15,12 +15,12 @@ function Login() {
         e.preventDefault()
         axios.post('http://localhost/auth/login', {
             email: form.email,
-            password: form.password
+            password: form.password,
         }).then(res=>setData(res.data)).catch(err=> console.log(err))
         console.log(data)
         if(data.username && data.accessToken){
             setUsernameCookie('username', data.username, {path: '/'})
-            setAccesstokenCookie('accessToken', data.accessToken, {path: '/'})
+            setAccesstokenCookie('token', data.accessToken, {path: '/'})
         }
     }
     return(
