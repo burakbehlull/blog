@@ -1,10 +1,10 @@
 import User from '../models/User.js'
 import {generateAccessToken, generateRefreshToken,verifyAccessToken} from '../helpers/sessions.js'
 async function register(req,res){
-    
     const {displayName, username, email, password} = req.body
     const user = await User.findOne({email: email})
-    if(user){
+    const username_control = await User.findOne({username: username})
+    if(user || username_control){
         res.json({
             message: 'Bu kullanıcı zaten var.'
         })
