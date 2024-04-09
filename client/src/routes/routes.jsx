@@ -3,6 +3,7 @@ import App from '../App';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import Login from '../pages/auth/Login';
+import NotFound from '../pages/NotFound';
 
 function Routes() {
     const routes = useRoutes([
@@ -17,6 +18,10 @@ function Routes() {
         {
             path: '/login',
             element: <Login />
+        }, 
+        {
+            path: '*',
+            element: <NotFound />
         }
     ])
     return routes;    

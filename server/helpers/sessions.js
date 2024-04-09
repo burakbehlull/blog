@@ -22,8 +22,10 @@ function isExpired(token){
         if (err.name === 'TokenExpiredError') {
             console.log('Expired')
             return {expired: true}
+        } else if (err.name === 'JsonWebTokenError' && err.message === 'invalid signature'){
+            return {expired: false}
         }
-        console.log('nulll')
+        console.log('null')
         return null
     }
 }
