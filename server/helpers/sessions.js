@@ -57,4 +57,5 @@ export {
     verifyAccessToken,
     generateAccessToken,
     generateRefreshToken,
+    userUpdate
 }
