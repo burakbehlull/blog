@@ -8,10 +8,8 @@ async function createPost(req,res){
         post
     })
 }
-
 async function getPosts(req,res){
     try {
-
         const categorySlug = req.query.category;
                 const { search } = req.query;
 
@@ -49,9 +47,8 @@ async function getPosts(req,res){
                     message: error.message
                 });
             }
-        }
-
-        async function deletePost(req, res) {
+}
+async function deletePost(req, res) {
             try {
 
                 const postId = req.body.postId;
@@ -75,9 +72,8 @@ async function getPosts(req,res){
                             message: error.message
                         });
                     }
-        }
-
-        async function updatePost(req, res) {
+}
+async function updatePost(req, res) {
             try {
 
                 const { id, title, description } = req.body;
@@ -115,8 +111,8 @@ async function getPosts(req,res){
                             message: error.message
                         });
                     }
-        }
-        async function allPosts(req, res) {
+}
+async function allPosts(req, res) {
             try {
                 const posts = await Post.find({}).sort('-createdAt');
                 res.status(200).json(posts);
@@ -127,8 +123,8 @@ async function getPosts(req,res){
                     message: error.message
                 });
             }
-        }
-        async function findUser(req,res){
+}
+async function findUser(req,res){
             const {username} = req.body
             try {
                 const user = await User.findOne({username: username})
@@ -143,9 +139,31 @@ async function getPosts(req,res){
                 res.status(500).json({error: err.message})
             }
             
+}
+async function getCategories(req,res) {
+    try {
+        const category = await Category.find({})
+        if(category){
+            return res.status(200).json({
+                success: true,
+                category: category
+            })
         }
-        
+        res.json({
+            success: false,
+            category: null
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 export {
-    createPost, getPosts, deletePost, updatePost,allPosts, findUser
+    createPost, 
+    getPosts, 
+    deletePost, 
+    updatePost,
+    allPosts, 
+    findUser,
+    getCategories
 }

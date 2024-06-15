@@ -1,6 +1,6 @@
 import express from 'express'
 
-import {createPost, getPosts, deletePost, updatePost,allPosts, findUser } from '../controllers/postController.js'
+import {createPost, getPosts, deletePost, updatePost,allPosts, findUser, getCategories } from '../controllers/postController.js'
 
 const router = express.Router();
 
@@ -12,5 +12,7 @@ router.delete('/posts', deletePost)
 router.put('/posts', updatePost)
 
 router.post('/findUser', findUser)
+
+router.get('/categories', getCategories)
 
 export default router;

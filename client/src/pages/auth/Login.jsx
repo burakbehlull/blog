@@ -25,11 +25,10 @@ function Login() {
     }
     return(
         <>
-            <form>
-                <input type='email' name='email' value={form.email} onChange={onChange} />
-                <input type='password' name='password' value={form.password} onChange={onChange} />
-                <button type='submit' onClick={handleChange}>Giriş Yap</button>
-            </form>
+            <input type='email' name='email' value={form.email} onChange={onChange} />
+            <input type='password' name='password' value={form.password} onChange={onChange} />
+            <button type='submit' onClick={handleChange}>Giriş Yap</button>
+
         </>
     )
 }
