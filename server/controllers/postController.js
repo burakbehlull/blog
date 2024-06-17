@@ -1,12 +1,40 @@
 import Post from '../models/Post.js'
 import User from '../models/User.js'
 import Category from '../models/Category.js'
-
+import { verifyToken } from '../helpers/sessions.js'
 async function createPost(req,res){
-    const post = await Post.create(req.body)
-    res.json({
-        post
-    })
+    const { title,description,category,token } = req.body 
+    try {
+        console.log(1)
+        if(!token) return res.json({
+            success: false,
+            message: 'Token yok.'
+        })
+        
+        const verify = await verifyToken(token)
+        console.log(verify)
+        if(!verify?.user.email) return res.json({
+            success: false,
+            message: 'Email doğrulanmadı.'
+        })
+        console.log(2)
+        const email = verify?.user.email
+        const user = await User.findOne({email: email})
+        if(!user) return res.json({
+            success: false,
+            message: 'Kullanıcı bulunamadı.'
+        })
+        const post = await Post.create({
+            title: title,
+            description: description,
+            category: category,
+            user: user._id
+        })
+        console.log(3)
+        return res.json(post)
+    } catch (error) {
+        console.log(error)
+    }
 }
 async function getPosts(req,res){
     try {

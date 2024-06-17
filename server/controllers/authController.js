@@ -1,5 +1,5 @@
 import User from '../models/User.js'
-import {generateAccessToken, generateRefreshToken,verifyAccessToken} from '../helpers/sessions.js'
+import {generateAccessToken, generateRefreshToken,verifyAccessToken, verifyToken} from '../helpers/sessions.js'
 async function register(req,res){
     const {displayName, username, email, password} = req.body
     const user = await User.findOne({$or: [{email: email}, {username: username}]})
@@ -54,11 +54,32 @@ async function login(req,res){
     }
 }
 
+async function userVerify(req,res){
+    const { token } = req.body
+    try {
+        if(!token) res.sendStatus(200).json({
+            success: true,
+            message: 'Token boş'
+        })
+
+        const verify = await verifyToken(token)
+        return res.json({
+            success: true,
+            message: 'İşlem başarılı',
+            verify: verify
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 function GoogleRedirect(){
     return ''
 }
 
 export {
     register, login, 
-    GoogleRedirect
+    GoogleRedirect,
+
+    userVerify
 }

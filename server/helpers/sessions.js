@@ -1,11 +1,22 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import User from '../models/User.js'
+import { useStore } from 'react-redux'
 dotenv.config()
 const JWT_KEY = process.env.JWT_KEY
 
 function generateRefreshToken(data){
     return jwt.sign(data, JWT_KEY, {expiresIn: '10h'})
+}
+
+async function verifyToken(token){
+    const vwt = await jwt.verify(token, JWT_KEY, (err, user)=>{
+        return {
+            user: user,
+            err: err
+        }
+    })
+    return vwt
 }
 
 function generateAccessToken(data){
@@ -57,5 +68,6 @@ export {
     verifyAccessToken,
     generateAccessToken,
     generateRefreshToken,
-    userUpdate
+    userUpdate,
+    verifyToken
 }
