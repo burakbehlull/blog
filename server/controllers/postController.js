@@ -1,26 +1,31 @@
 import Post from '../models/Post.js'
 import User from '../models/User.js'
 import Category from '../models/Category.js'
-import { verifyToken } from '../helpers/sessions.js'
-import mongoose from 'mongoose'
+import { verifyToken, isExpired } from '../helpers/sessions.js'
+
 async function createPost(req,res){
     const { title,description,category,token } = req.body 
     try {
-        console.log(1)
         if(!token) return res.json({
             success: false,
             message: 'Token yok.'
         })
         
         const verify = await verifyToken(token)
-        console.log(verify)
-        if(!verify?.user.email) return res.json({
+        const ex = await isExpired(token)
+        if(ex.expired) return res.json({
+            success: false,
+            message: 'Token süresi dolmuş!'
+        })
+        
+        if(!verify.user?.email) return res.json({
             success: false,
             message: 'Email doğrulanmadı.'
         })
-        console.log(2)
+
         const email = verify?.user.email
         const user = await User.findOne({email: email})
+
         if(!user) return res.json({
             success: false,
             message: 'Kullanıcı bulunamadı.'
@@ -31,10 +36,13 @@ async function createPost(req,res){
             category: category,
             user: user._id
         })
-        console.log(3)
         return res.json(post)
-    } catch (error) {
-        console.log(error)
+    } catch (err) {
+        return res.status(404).json({
+            error: err,
+            message: err.message,
+            success: false
+        })
     }
 }
 async function getPosts(req,res){
@@ -159,7 +167,7 @@ async function findUser(req,res){
                 const user = await User.findOne({username: username})
                 if(user){
                     const post = await Post.find({user: user._id})
-                    const posts = post ?? null
+                    let posts = post ? post : null
                     return res.status(200).json({user: user, posts: posts})
                 } 
                 

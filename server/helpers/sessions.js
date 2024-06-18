@@ -69,5 +69,6 @@ export {
     generateAccessToken,
     generateRefreshToken,
     userUpdate,
-    verifyToken
+    verifyToken,
+    isExpired
 }

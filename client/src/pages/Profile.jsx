@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+
 function Profile() {
     const [posts, setPosts] = useState(null)
     const [user, setUser] = useState([])
@@ -13,16 +14,10 @@ function Profile() {
             const info = res.data
 			setUser(info.user)
             setPosts(info.posts)
-            console.log(res.data)
         }).catch(err => {
             setError(err.message)
         })
     }, [])
-
-
-
-
-
     return (
         <>
             <h1>Profile</h1>
