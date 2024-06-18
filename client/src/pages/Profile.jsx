@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 function Profile() {
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState(null)
     const [user, setUser] = useState([])
     const [error, setError] = useState('')
 
@@ -13,6 +13,7 @@ function Profile() {
             const info = res.data
 			setUser(info.user)
             setPosts(info.posts)
+            console.log(res.data)
         }).catch(err => {
             setError(err.message)
         })

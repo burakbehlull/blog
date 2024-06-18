@@ -2,6 +2,7 @@ import Post from '../models/Post.js'
 import User from '../models/User.js'
 import Category from '../models/Category.js'
 import { verifyToken } from '../helpers/sessions.js'
+import mongoose from 'mongoose'
 async function createPost(req,res){
     const { title,description,category,token } = req.body 
     try {
@@ -153,20 +154,19 @@ async function allPosts(req, res) {
             }
 }
 async function findUser(req,res){
-            const {username} = req.body
+            const { username } = req.body
             try {
                 const user = await User.findOne({username: username})
                 if(user){
-                    const posts = await Post.find({user: user._id})
-                    res.json({user: user, posts: posts})
-                } else {
-                    res.json({message: "User not found"})
-                }
+                    const post = await Post.find({user: user._id})
+                    const posts = post ?? null
+                    return res.status(200).json({user: user, posts: posts})
+                } 
                 
+                return res.status(404).json({message: "User not found"})
             } catch (err) {
-                res.status(500).json({error: err.message})
+                return res.status(404).json({error: err.message})
             }
-            
 }
 async function getCategories(req,res) {
     try {
