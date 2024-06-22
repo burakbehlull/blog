@@ -1,7 +1,11 @@
 import {useRoutes} from 'react-router-dom';
 import App from '../App';
 import Profile from '../pages/Profile';
+
+// Auth
 import Login from '../pages/auth/Login';
+import Register from '../pages/auth/Register';
+
 import NotFound from '../pages/NotFound';
 
 import CreatePost from '../components/CreatePost';
@@ -20,6 +24,10 @@ function Routes() {
             path: '/login',
             element: <Login />
         }, 
+        {
+            path:'/register',
+            element: <Register />
+        },
         {
             path: '/createPost',
             element: <CreatePost />
