@@ -73,6 +73,29 @@ async function userVerify(req,res){
     }
 }
 
+async function profileVerify(req,res){
+    const { token } = req.body
+    try {
+        if(!token) return res.json({
+            success: true,
+            message: 'Token boş'
+        })
+
+        const verify = await verifyToken(token)
+        console.log(verify)
+        const user = await User.findOne({email: verify?.user?.email})
+        console.log(user)
+        return res.json({
+            success: true,
+            message: 'İşlem başarılı',
+            verify: verify,
+            user: user
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 function GoogleRedirect(){
     return ''
 }
@@ -80,6 +103,7 @@ function GoogleRedirect(){
 export {
     register, login, 
     GoogleRedirect,
+    profileVerify,
 
     userVerify
 }

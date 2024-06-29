@@ -2,7 +2,7 @@ import {useRoutes} from 'react-router-dom';
 
 import App from '../App';
 import NotFound from '@pages/NotFound';
-import { ProfileFinder } from '@profile';
+import { Profile, ProfileFinder } from '@profile';
 import { Login, Register } from '@auth';
 
 import { CreatePost } from '@components';
@@ -13,6 +13,10 @@ function Routes() {
             path: '/',
             element: <App />,
         }, 
+        {
+            path: '/profile',
+            element: <Profile />
+        },
         {
             path: '/profile/:username',
             element: <ProfileFinder />,
