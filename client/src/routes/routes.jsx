@@ -1,14 +1,11 @@
 import {useRoutes} from 'react-router-dom';
+
 import App from '../App';
-import Profile from '../pages/Profile';
+import NotFound from '@pages/NotFound';
+import { ProfileFinder } from '@profile';
+import { Login, Register } from '@auth';
 
-// Auth
-import Login from '../pages/auth/Login';
-import Register from '../pages/auth/Register';
-
-import NotFound from '../pages/NotFound';
-
-import CreatePost from '../components/CreatePost';
+import { CreatePost } from '@components';
 
 function Routes() {
     const routes = useRoutes([
@@ -18,7 +15,7 @@ function Routes() {
         }, 
         {
             path: '/profile/:username',
-            element: <Profile />,
+            element: <ProfileFinder />,
         },
         {
             path: '/login',

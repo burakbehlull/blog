@@ -8,6 +8,7 @@ function Login() {
     
     const [form, setForm] = useState({email: '', password: ''})
     const [data, setData] = useState({})
+    const [error, setError] = useState(null)
     const onChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value})
     }
@@ -16,7 +17,7 @@ function Login() {
         axios.post('http://localhost/auth/login', {
             email: form.email,
             password: form.password,
-        }).then(res=>setData(res.data)).catch(err=> console.log(err))
+        }).then(res=>setData(res.data)).catch(err=> setError(err))
         console.log(data)
         if(data.username && data.accessToken){
             setUsernameCookie('username', data.username, {path: '/'})
@@ -25,6 +26,8 @@ function Login() {
     }
     return(
         <>
+            {error && error?.message}
+            {data.message && data?.message}
             <input type='email' name='email' value={form.email} onChange={onChange} />
             <input type='password' name='password' value={form.password} onChange={onChange} />
             <button type='submit' onClick={handleChange}>Giriş Yap</button>
