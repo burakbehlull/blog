@@ -6,9 +6,7 @@ import passport from 'passport'
 import session from 'express-session'
 import morgan from 'morgan'
 
-import pageRoute from './routers/pageRoute.js'
-import postRoute from './routers/postRoute.js'
-import authRoute from './routers/authRoute.js'
+import { adminRoute, postRoute, pageRoute, authRoute } from './routers/index.js'
 import dbconn from './config/db.js'
 
 const app = express()
@@ -41,6 +39,7 @@ app.use(passport.initialize())
 app.use('/', pageRoute)
 app.use('/api', postRoute)
 app.use('/auth', authRoute)
+app.use('/admin', adminRoute)
 
 app.listen(process.env.PORT, ()=>{
 	console.log(`${process.env.PORT} portunda çalışıyor.`)
