@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+    const navigate = useNavigate()
     const [usernameCookies, setUsernameCookie, removeUsernameCookie] = useCookies(['username'])
     const [accesstokenCookies, setAccesstokenCookie, removeAccesstokenCookie] = useCookies(['token'])
     
@@ -22,10 +24,13 @@ function Login() {
         if(data.username && data.accessToken){
             setUsernameCookie('username', data.username, {path: '/'})
             setAccesstokenCookie('token', data.accessToken, {path: '/'})
+            navigate('/profile')
+
         }
     }
     return(
         <>
+            LOGIN
             {error && error?.message}
             {data.message && data?.message}
             <input type='email' name='email' value={form.email} onChange={onChange} />

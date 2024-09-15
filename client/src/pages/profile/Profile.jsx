@@ -7,6 +7,7 @@ function Profile(){
     const username = profilecookie['username']
     const token = profilecookie['token']
     const [verifyData, setVerifyData] = useState({})
+    const [user, setUser] = useState({})
     const [error, setError] = useState({})
 
     useEffect(()=> {
@@ -14,18 +15,21 @@ function Profile(){
             await axios.post('http://localhost:80/auth/profileVerify', {
                 token: token
             })
-            .then(res=> setVerifyData(res.data))
+            .then(res=> {
+                setVerifyData(res.data)
+                setUser(res.data['user'])
+            })
             .catch(error=> setError(error))
         }
         verifyUser()
     }, [])
     return(
-        <>
+        <div id="profile">
             Profile
-            username: {username}
+            <h3>username: {username}</h3>
             {JSON.stringify(verifyData)}
             
-        </>
+        </div>
     )
 }
 
