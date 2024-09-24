@@ -15,6 +15,7 @@ export default defineConfig({
     alias: {
       '~': way('src'),
       '@pages': way('src/pages'),
+      '@partials': way('src/pages/partials/index'),
       '@auth': way('src/pages/auth/index'),
       '@profile': way('src/pages/profile/index'),
       '@components': way('src/components/index')

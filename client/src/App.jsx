@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
-import Home from './pages/Home'
 import axios from 'axios'
 import { setCategories } from './store/slices/keepSlice'
 import { useDispatch } from 'react-redux'
+import { Outlet } from 'react-router-dom'
+import { Nav } from '@partials'
+
 function App() {
   const dispatch = useDispatch()
   useEffect(()=> {
@@ -15,7 +17,12 @@ function App() {
   }, [])
   return (
     <>
-      <Home />
+      <header>
+        <Nav />
+      </header>
+      <main>
+        <Outlet />
+      </main>
     </>
   )
 }

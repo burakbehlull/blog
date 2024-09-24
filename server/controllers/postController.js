@@ -85,6 +85,7 @@ async function getPosts(req,res){
                 });
             }
 }
+
 async function deletePost(req, res) {
             try {
 
