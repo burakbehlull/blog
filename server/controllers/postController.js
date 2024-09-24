@@ -163,19 +163,18 @@ async function allPosts(req, res) {
             }
 }
 async function findUser(req,res){
-            const { username } = req.body
-            try {
-                const user = await User.findOne({username: username})
-                if(user){
-                    const post = await Post.find({user: user._id})
-                    let posts = post ? post : null
-                    return res.status(200).json({user: user, posts: posts})
-                } 
-                
-                return res.status(404).json({message: "User not found"})
-            } catch (err) {
-                return res.status(404).json({error: err.message})
-            }
+    const { username } = req.body
+    try {
+        const user = await User.findOne({username: username})
+        if(user){
+            const post = await Post.find({user: user._id})
+            let posts = post ? post : null
+            return res.status(200).json({user: user, posts: posts})
+        } 
+        return res.status(200).json({message: "User not found", success: false})
+    } catch (err) {
+        return res.status(404).json({error: err.message})
+    }
 }
 async function getCategories(req,res) {
     try {
